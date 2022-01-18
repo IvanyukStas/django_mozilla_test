@@ -7,6 +7,7 @@ authors = ["qqq <aswd25@yandex.ru>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 Django = "^4.0.1"
+Faker = "^11.3.0"
 
 [tool.poetry.dev-dependencies]
 

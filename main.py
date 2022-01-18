@@ -1,16 +1,7 @@
-# This is a sample Python script.
+from faker import Faker
+from .catalog.models import Author, Book, BookInstance
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+a = Faker()
+for i in range(100):
+author = Author(first_name=a.first_name(), last_name=a.last_name(), date_of_birth=a.date(), date_of_death=a.date())
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/

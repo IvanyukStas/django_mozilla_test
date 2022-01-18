@@ -38,6 +38,7 @@ class BookDetailView(LoginRequiredMixin, generic.DetailView):
 
 class AuthorListView(LoginRequiredMixin, generic.ListView):
     model = Author
+    paginate_by = 10
 
 
 class AuthorDetailView(LoginRequiredMixin, generic.DetailView):
