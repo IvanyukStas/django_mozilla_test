@@ -1,0 +1,20 @@
+{% extends 'base.html'%}
+{% block content %}
+    {% if user.is_staff %}
+        {% if not bookinstance_list %}
+            <p>No books on lean</p>
+        {% else %}
+            <ul>
+            {% for bookinstance in bookinstance_list %}
+
+                <strong>User: </strong>{{ bookinstance.borrower }}
+                <li class="{% if bookinstance.is_overdue %} text-danger{% endif %}">
+                    <a href="{% url 'book-detail' bookinstance.book.pk %}">{{ bookinstance.book.title| title }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if perms.catalog.can_mark_returned %}
+        <h1>Can modifaed</h1>
+    {% endif %}
+    <h1>User bookinstanse</h1>
+    {% if not bookinstance_list %}
+    <p>No book in list for {{ user| title }}</p>
+        {% else %}
+        {% for bookinstance in bookinstance_list %}
+            <ul>
+            <li><a href="{% url 'book-detail' bookinstance.book.pk %}">{{ bookinstance.book |title}}</a></li>
+            <li><strong>Status: </strong>{{ bookinstance.status }}</li>
+            <li><strong>due_back: </strong>
+                {% if bookinstance.is_overdue %}
+                    <li class="text-danger">
+                Book {{ bookinstance.book.title| upper }} is over due. Please return the book!
+                {% else %}
+                {{ bookinstance.due_back }}</li>
+            {% endif %}
+            </ul>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

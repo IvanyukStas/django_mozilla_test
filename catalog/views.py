@@ -1,5 +1,5 @@
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 
 # Create your views here.
@@ -30,6 +30,7 @@ def index(request):
 
 class BookListView(LoginRequiredMixin, generic.ListView):
     model = Book
+    paginate_by = 10
 
 
 class BookDetailView(LoginRequiredMixin, generic.DetailView):
@@ -43,3 +44,22 @@ class AuthorListView(LoginRequiredMixin, generic.ListView):
 
 class AuthorDetailView(LoginRequiredMixin, generic.DetailView):
     model = Author
+
+
+class LoanedBooksByUserListView(LoginRequiredMixin,  generic.ListView):
+    model = BookInstance
+    template_name = 'catalog/bookinstance_list_borrowed_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o')
+
+
+class LoanedBooksStaffListView(LoginRequiredMixin, generic.ListView):
+    # permission_required = 'can_mark_returned'
+    model = BookInstance
+    paginate_by = 10
+    template_name = 'catalog/bookinstacne_list_for_staff.html'
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(status__exact='o').filter(borrower__isnull=False).order_by('due_back')

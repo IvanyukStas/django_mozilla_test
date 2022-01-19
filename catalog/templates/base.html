@@ -23,6 +23,12 @@
       {% block sidebar %}
           {% if user.is_authenticated %}
       <ul class="sidebar-nav">
+              <p>User {{ user }}
+              <li><a href="{% url 'my-books' %}">My books</a></li></p>
+              {% if user.is_staff %}
+                  <p>Staff:
+                  <li><a href="{% url 'borred-books' %}">List of borrowed books</a></li></p>
+                  {% endif %}
           <li><a href="{% url 'index' %}">Home</a></li>
           <li><a href="{% url 'books' %}">All books</a></li>
           <li><a href="{% url 'authors' %}">All authors</a></li>
