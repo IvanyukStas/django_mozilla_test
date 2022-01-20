@@ -3,11 +3,18 @@
 {% block content %}
     <h1>Authors:</h1>
     {% if author_list %}
+        <ul>
+    {% if messages %}
+                {% for message in messages %}
+                <li class="text-danger">{{ message }}</li>
+                {% endfor %}
+            {% endif %}
         {% for author in author_list %}
-            <ul>
+
             <li><a href="{{ author.get_absolute_url }}"><strong>{{ author.first_name }} {{ author.last_name }}</strong></a></li>
-            </ul>
+
         {% endfor %}
+    </ul>
     {% endif %}
 
 {% endblock %}

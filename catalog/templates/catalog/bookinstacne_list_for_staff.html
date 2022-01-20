@@ -4,13 +4,24 @@
         {% if not bookinstance_list %}
             <p>No books on lean</p>
         {% else %}
+        <h1>All on lean books: </h1>
             <ul>
+            {% if messages %}
+                {% for message in messages %}
+                <li class="text-danger">{{ message }}</li>
+                {% endfor %}
+            {% endif %}
             {% for bookinstance in bookinstance_list %}
 
                 <strong>User: </strong>{{ bookinstance.borrower }}
                 <li class="{% if bookinstance.is_overdue %} text-danger{% endif %}">
-                    <a href="{% url 'book-detail' bookinstance.book.pk %}">{{ bookinstance.book.title| title }}</a>
+                    <a href="{% url 'book-detail' bookinstance.book.pk %}">{{ bookinstance.book.title| title }}</a>   {{ bookinstance.due_back }}
                 </li>
+                {% if perms.catalog.can_mark_returned %}
+                    <li>
+                        <a href="{% url 'renew-book-librian' bookinstance.id %}">Edit due</a>
+                    </li>
+                {% endif %}
             {% endfor %}
             </ul>
         {% endif %}

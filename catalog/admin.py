@@ -15,6 +15,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
             'fields': ('status', 'due_back', 'borrower')
         })
     )
+    list_per_page = 50
 
 
 admin.site.register(Book)
