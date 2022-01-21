@@ -128,9 +128,13 @@ class BookInstanceUpdate(generic.edit.UpdateView):
     model = BookInstance
     fields = ['book', 'imprint', 'due_back', 'borrower', 'status', ]
 
-    def gen_success_url(self):
-        print(self.object.book.id)
-        return reverse_lazy('book-detail', kwargs={'pk': self.object.book.id})
+    # success_url = reverse_lazy('books')
+    success_message = f'Обновили состояние у книги:'
+
+
+    def get_success_url(self):
+        return reverse('book-detail', args=[str(self.object.book.id)])
+
 
 class BookInstanceDelete(SuccessMessageMixin , generic.edit.DeleteView):
     model = BookInstance
